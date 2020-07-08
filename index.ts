@@ -51,10 +51,7 @@ export interface SwallowStrategyDetail {
     enabled?: boolean;
 }
 export interface EventState {
-    [eventName: string]: {
-        count: number;
-        lastData?: any;
-    };
+    [eventName: string]: number;
 }
 export type SwallowStrategy =
     | SwallowStrategyDetail
@@ -519,14 +516,11 @@ export class Squirrel {
     clearEventState() {
         this.eventState = {};
     }
-    trigger(eventName: string, eventData?: any) {
+    trigger(eventName: string) {
         if (!this.eventState[eventName]) {
-            this.eventState[eventName] = {
-                count: 0,
-            };
+            this.eventState[eventName] = 0;
         }
-        this.eventState[eventName].count++;
-        this.eventState[eventName].lastData = eventData;
+        this.eventState[eventName]++;
         const fullSpec = this.getStrategySpec();
         const check = (spec: StrategySpecDetail, level?: DataLevel) => {
             if (!spec) return;
@@ -561,7 +555,7 @@ export class Squirrel {
                 spec.eventCount.some(
                     (item) =>
                         item.name === eventName &&
-                        this.eventState[eventName].count >= item.count
+                        this.eventState[eventName] >= item.count
                 )
             ) {
                 this.swallow(null, level);

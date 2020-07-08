@@ -371,15 +371,12 @@ var Squirrel = /** @class */ (function () {
     Squirrel.prototype.clearEventState = function () {
         this.eventState = {};
     };
-    Squirrel.prototype.trigger = function (eventName, eventData) {
+    Squirrel.prototype.trigger = function (eventName) {
         var _this = this;
         if (!this.eventState[eventName]) {
-            this.eventState[eventName] = {
-                count: 0,
-            };
+            this.eventState[eventName] = 0;
         }
-        this.eventState[eventName].count++;
-        this.eventState[eventName].lastData = eventData;
+        this.eventState[eventName]++;
         var fullSpec = this.getStrategySpec();
         var check = function (spec, level) {
             if (!spec)
@@ -412,7 +409,7 @@ var Squirrel = /** @class */ (function () {
             if (spec.eventCount &&
                 spec.eventCount.some(function (item) {
                     return item.name === eventName &&
-                        _this.eventState[eventName].count >= item.count;
+                        _this.eventState[eventName] >= item.count;
                 })) {
                 _this.swallow(null, level);
             }

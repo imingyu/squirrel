@@ -25,10 +25,7 @@ export interface SwallowStrategyDetail {
     enabled?: boolean;
 }
 export interface EventState {
-    [eventName: string]: {
-        count: number;
-        lastData?: any;
-    };
+    [eventName: string]: number;
 }
 export declare type SwallowStrategy = SwallowStrategyDetail | Array<SwallowStrategyDetail> | SwallowStrategyCustom;
 export interface LevelSwallowStrategy {
@@ -117,7 +114,7 @@ export declare class Squirrel {
     swallow(data?: any, level?: DataLevel): any;
     destory(): void;
     clearEventState(): void;
-    trigger(eventName: string, eventData?: any): void;
+    trigger(eventName: string): void;
     getLevalDataList(level?: DataLevel, remove?: boolean): SwallowDatItem[];
 }
 export {};

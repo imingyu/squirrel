@@ -1,2 +1,70 @@
 # squirrel
-小松鼠——适用于JavaScript平台的数据上报工具
+
+小松鼠——适用于 JavaScript 平台的数据上报工具，可指定多种上报策略
+
+## 安装
+
+```bash
+npm i squirrel-report -S
+```
+
+## 使用
+
+```javascript
+import { Squirrel, DataLevel, SwallowStrategyMode } from "squirrel-report";
+const reporter = new Squirrel({
+    adapter: (list) => {
+        // myAjax(list);
+    },
+    strategy: {
+        // 设置上传策略为：每满10条上报一次
+        mode: SwallowStrategyMode.intervalCount,
+        value: 10,
+    },
+});
+
+// 插入数据到队列池
+reporter.stuff("data1...");
+reporter.stuff("data2...", DataLevel.high);
+.
+.
+.
+reporter.stuff("data10..."); // 触发上报
+
+// 也可以在任意时刻进行手动执行上报
+reporter.swallow();
+```
+
+## API
+
+### class Squirrel
+
+-   `constructor(options:SquirrelOptions)`
+    -   构造函数，可传入`options`，使用`this.setOptions`进行配置项解析
+-   `setOptions(options:SquirrelOptions)`
+    -   解析并应用配置
+-   `stuff(data:any, level:DataLevel)`
+    -   将数据按照优先级插入到队列池中
+-   `swallow(data?:any, level?:DataLevel)`
+    -   强制执行上报操作，如果不传递任何参数或参数皆为空，则上报所有优先级的数据，如果传递的数据为空，但是存在优先级，则会上报该优先级下的所有数据
+-   `trigger(eventName)`
+    -   触发事件，Squirrel类本身会触发如下事件：
+        - `stuff`: 插入数据时触发
+        - `swallow`: 上报数据时触发
+        - `setOptions`: 设置配置项时触发
+        - `storageError`: 在配置项中指定了`setStorage`，并且在执行数据持久化调用`setStorage`后失败时触发
+
+-   `destory()`
+    -   销毁实例，如果上报策略中指定了与实际相关的策略时，请务必执行此函数以销毁定时器
+
+### interface SquirrelOptions
+
+```typescript
+{
+    adapter: Function; // 发送数据时调用的函数，返回false或者reject状态的promise则认为此次数据发送失败，需要根据failAction配置执行后续操作
+    strategy: SwallowStrategy | LevelSwallowStrategy; // 上报策略
+    failAction: FailAction | FailActionCustom; // 如果发送数据失败了，该做什么？
+    getStorage?: Function; // 初始化Squirrel实例时从持久化介质中获取数据
+    setStorage?: Function; // 将数据持久化的函数
+}
+```
