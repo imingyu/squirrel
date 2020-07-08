@@ -1,7 +1,7 @@
 # squirrel
 
 [![Build Status](https://travis-ci.org/imingyu/squirrel.svg?branch=master)](https://travis-ci.org/imingyu/squirrel)
-![image](https://img.shields.io/npm/l/squirrel.svg)
+![image](https://img.shields.io/npm/l/squirrel-report.svg)
 [![image](https://img.shields.io/npm/v/squirrel-report.svg)](https://www.npmjs.com/package/squirrel-report)
 [![image](https://img.shields.io/npm/dt/squirrel-report.svg)](https://www.npmjs.com/package/squirrel-report)
 
