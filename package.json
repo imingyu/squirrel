@@ -1,0 +1,27 @@
+{
+    "name": "squirrel-report",
+    "version": "1.0.0",
+    "description": "小松鼠——适用于JavaScript平台的数据上报工具",
+    "main": "index.js",
+    "module": "index.es.js",
+    "types": "index.d.ts",
+    "scripts": {
+        "build": "tsc index.ts -d -m \"CommonJS\" && node build.js",
+        "test": "mocha test.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/imingyu/squirrel.git"
+    },
+    "author": "imingyu",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/imingyu/squirrel/issues"
+    },
+    "homepage": "https://github.com/imingyu/squirrel#readme",
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "mocha": "^8.0.1",
+        "typescript": "^3.9.6"
+    }
+}
