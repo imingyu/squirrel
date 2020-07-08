@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/imingyu/squirrel.svg?branch=master)](https://travis-ci.org/imingyu/squirrel)
 ![image](https://img.shields.io/npm/l/squirrel.svg)
-[![image](https://img.shields.io/npm/v/squirrel.svg)](https://www.npmjs.com/package/squirrel)
-[![image](https://img.shields.io/npm/dt/squirrel.svg)](https://www.npmjs.com/package/squirrel)
+[![image](https://img.shields.io/npm/v/squirrel-report.svg)](https://www.npmjs.com/package/squirrel-report)
+[![image](https://img.shields.io/npm/dt/squirrel-report.svg)](https://www.npmjs.com/package/squirrel-report)
 
 小松鼠——适用于 JavaScript 平台的数据上报工具，可指定多种上报策略
 
