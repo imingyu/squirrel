@@ -2,6 +2,11 @@
 
 小松鼠——适用于 JavaScript 平台的数据上报工具，可指定多种上报策略
 
+## 使用场景
+- 上报埋点数据
+- 上报日志数据
+- 上报异常数据
+
 ## 安装
 
 ```bash
@@ -35,6 +40,36 @@ reporter.stuff("data10..."); // 触发上报
 reporter.swallow();
 ```
 
+## 上报策略
+
+```javascript
+// 上报策略可选值
+enum SwallowStrategyMode {
+    delayTime = "delayTime", // 延迟xx时间后，延迟时间内多次吞入会重新计时，单位ms
+    intervalTime = "intervalTime", // 每间隔xx时间，单位ms
+    intervalCount = "intervalCount", // 每间隔xx条数据
+    event = "event", // 当发生某事件时，需调用Squirrel实例的trigger方法进行事件触发
+    eventCount = "eventCount", // 当发生某事件xx次后，需调用Squirrel实例的trigger方法进行事件触发
+}
+```
+
+在使用构造函数`new Squirrel(options)`或者`squirrel.setOptions(options)`设置配置项时，可在`options`中传递`strategy`选项，用于指定上报策略；
+`strategy`的值可以是单纯的对象，如：
+```javascript
+{ mode: SwallowStrategyMode.intervalCount, value: 10}
+```
+
+也可以在`strategy`对象上按照优先级设置上报策略，如：
+
+```javascript
+{
+    [DataLevel.high]: {
+        mode: SwallowStrategyMode.intervalCount,
+        value: 10
+    }
+}
+```
+
 ## API
 
 ### class Squirrel
@@ -48,11 +83,12 @@ reporter.swallow();
 -   `swallow(data?:any, level?:DataLevel)`
     -   强制执行上报操作，如果不传递任何参数或参数皆为空，则上报所有优先级的数据，如果传递的数据为空，但是存在优先级，则会上报该优先级下的所有数据
 -   `trigger(eventName)`
-    -   触发事件，Squirrel类本身会触发如下事件：
-        - `stuff`: 插入数据时触发
-        - `swallow`: 上报数据时触发
-        - `setOptions`: 设置配置项时触发
-        - `storageError`: 在配置项中指定了`setStorage`，并且在执行数据持久化调用`setStorage`后失败时触发
+
+    -   触发事件，Squirrel 类本身会触发如下事件：
+        -   `stuff`: 插入数据时触发
+        -   `swallow`: 上报数据时触发
+        -   `setOptions`: 设置配置项时触发
+        -   `storageError`: 在配置项中指定了`setStorage`，并且在执行数据持久化调用`setStorage`后失败时触发
 
 -   `destory()`
     -   销毁实例，如果上报策略中指定了与实际相关的策略时，请务必执行此函数以销毁定时器
