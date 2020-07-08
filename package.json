@@ -1,6 +1,6 @@
 {
     "name": "squirrel-report",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "小松鼠——适用于JavaScript平台的数据上报工具",
     "main": "index.js",
     "module": "index.es.js",
@@ -13,7 +13,16 @@
         "type": "git",
         "url": "git+https://github.com/imingyu/squirrel.git"
     },
-    "author": "imingyu",
+    "author": {
+        "name": "imingyu",
+        "email": "mingyuhisoft@163.com"
+    },
+    "keywords": [
+        "data-report",
+        "report",
+        "reporting",
+        "timer-report"
+    ],
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/imingyu/squirrel/issues"
